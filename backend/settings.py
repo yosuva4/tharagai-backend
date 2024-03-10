@@ -179,7 +179,6 @@ MEDIA_URL = '/images/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-
 MEDIA_ROOT = 'static/images'
 
 # Default primary key field type
