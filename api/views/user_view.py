@@ -1,6 +1,3 @@
-from typing import Any, Dict
-from django.shortcuts import render
-from django.http import JsonResponse
 
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
@@ -10,19 +7,14 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAdminUser,IsAuthenticated
 from rest_framework.response import Response
 
-from .products import products
+from ..serializer import UserSerializer,UserSerializerWithToken
 
-from .serializer import ProductSerializer,UserSerializer,UserSerializerWithToken
-from .models import Product
-
-
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer #Login View
+from rest_framework_simplejwt.views import TokenObtainPairView  #Token View
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        print()
         data = super().validate(attrs)
         seriaalizer = UserSerializerWithToken(self.user).data
 
@@ -89,13 +81,3 @@ def registerUser(request):
     except:
         message = {'detail':"User with this already exists"}
         return Response(message,status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET'])
-def getProducts(request):
-    serializer = ProductSerializer(Product.objects.all(),many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getProduct(request,pk):
-    serializer = ProductSerializer(Product.objects.filter(_id=pk),many=True)
-    return Response(serializer.data)
