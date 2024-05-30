@@ -1,0 +1,11 @@
+{
+  "phone_number": "8220644889",
+  "csrfmiddlewaretoken": "django-insecure-e$+!=%j!)^l8wzlrm(fz2w6+*wyj2adk$qhb7o+a%xmfnpjf5+"
+}
+
+skincare 
+haircare 
+oral care 
+foot care
+Eye care 
+lip care
