@@ -17,7 +17,7 @@ from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+tempDir = os.path.join(BASE_DIR,'template')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-e$+!=%j!)^l8wzlrm(fz2w6+*wyj2adk$qhb7o+a%xmfnpjf5+'
@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     "django_filters",
     'rest_framework.authtoken',
     
-    'corsheaders'
+    'corsheaders',
+    
+    'fontawesomefree'
     
 ]
 
@@ -82,7 +84,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [tempDir],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,10 +155,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 MEDIA_ROOT = 'static/images'
 # Default primary key field type

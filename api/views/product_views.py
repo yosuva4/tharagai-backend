@@ -4,12 +4,92 @@ from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.exceptions import NotFound
 
+
+
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 from api.serializers.product_Serializers import ProductSerializers,CartSerializer,ProductTypeSerializers
 from api.model.product_model import *
+from api.forms import ProductForm
+
+class Products(APIView):
+    def get(self,request):
+        return Response(status=200, data={"message" : "product showd"}) 
+    def post(self,request):
+        data =  request.data
+        try:        
+            required_fields = ['name', 'productTitle', 'product_type_name', 'description', 'image', 'variations', 'howtouse', 'ingredients','skintype']
+            for field in required_fields:
+                if field not in data:
+                    return Response(status=400, data={"error": f"Missing required field: {field}"})
+
+            image = request.FILES.get('image', None)
+
+            product_type, created = ProductType.objects.get_or_create(name=data['product_type_name'])
+                
+            product = Product.objects.create(
+                name=data['name'],
+                product_type=product_type,
+                productTitle=data['productTitle'],
+                description=data['description'],
+                # image=data["image"]  # Assuming image URL is provided directly
+            )
+            variations_data = data['variations']
+            
+            for variation_data in variations_data:
+                ProductVariation.objects.create(
+                    product=product,
+                    weight=variation_data['weight'],
+                    price=variation_data['price']
+                )
+            # # Create other related instances
+            for skintype_data in data['skintype']:
+                SkinType.objects.create(
+                    product=product,
+                    skinType=skintype_data['skinType']
+                )
+            
+            for howtouse_data in data['howtouse']:
+                HowtoUse.objects.create(
+                    product=product,
+                    how_to_use=howtouse_data['howtoUse']
+                )
+            
+            for benefit_data in data['benefit']:
+                Benefits.objects.create(
+                    product=product,
+                    benefit=benefit_data['benefit']
+                )
+            
+            for ingredient_data in data['ingredients']:
+                Ingredients.objects.create(
+                    product=product,
+                    ingredients=ingredient_data['keyIngredients']
+                )
+            return Response(status=200,data={"message":"All Products Saved!"})
+        except Exception as e:
+            print("The Error is : ",e)
+            
+            return Response(status=400,data={"error":"did not saved"})
+    def put(self,request):
+        return Response(status=200, data={"message" : "product updated"}) 
+    def delete(self,request):
+        return Response(status=200, data={"message" : "product updated"}) 
+    
+def add_product(request):
+    if request.method == 'POST':
+        product_name = request.POST.get('product_name')
+        product_title = request.POST.get('product_title')
+        product_type = request.POST.get('product_type')
+        product_description = request.POST.get('product_description')
+        product_image = request.FILES.get('product_image')  # Get the image file from request.FILES
+
+        # Print the retrieved data to verify
+        print("The Data is: ", request.POST)
+        print("Product Image: ", product_image)
+    return render(request,'product/add-product.html')
 
 
 class BestSeller(APIView):
@@ -18,10 +98,10 @@ class BestSeller(APIView):
         serializer = ProductSerializers(product, many=True)
         return Response(status=200, data=serializer.data) 
 
-class Products(ListAPIView):
-    model = Product
-    serializer_class = ProductSerializers
-    queryset = Product.objects.all().order_by("id")
+# class Products(ListAPIView):
+#     model = Product
+#     serializer_class = ProductSerializers
+#     queryset = Product.objects.all().order_by("id")
  
 class ProductTypeView(ListAPIView):
     model = ProductType

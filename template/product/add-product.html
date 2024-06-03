@@ -1,0 +1,235 @@
+{% extends 'index.html' %} {% block content %}
+<main class="flex">
+  {% include 'side-navbar.html' %}
+  <section class="p-4 w-full mt-1 mb-2">
+    <div class="bg-white h-full rounded p-4">
+      <h1 class="text-lg text-gray-500 font-semibold border-b pb-2">
+        Add Product
+      </h1>
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        class="p-4 grid grid-cols-2 gap-4"
+        id="add_product"
+      >
+        {% csrf_token%}
+        <div class="flex flex-col gap-1">
+          <label for="product_name">Product Name</label>
+          <input
+            type="text"
+            name="product_name"
+            id="product_name"
+            class="p-2 border outline-none rounded hover:border-green-700"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="product_title">Product Title</label>
+          <input
+            type="text"
+            name="product_title"
+            id="product_title"
+            class="p-2 border outline-none rounded"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="product_type">Product Type</label>
+          <select
+            name="product_type"
+            id="product_type"
+            class="p-2 border outline-none rounded bg-none"
+          >
+            <option value="">Skin Care</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="product_image">Product Image</label>
+          <input
+            type="file"
+            name="product_image"
+            id="product_image"
+            class="p-2 border outline-none rounded"
+          />
+        </div>
+
+        <div class="mt-4 flex flex-col gap-1 col-span-2">
+          <label for="product_description">Product Description</label>
+          <textarea
+            name="product_description"
+            id="product_description"
+            class="p-2 border outline-none rounded"
+          ></textarea>
+        </div>
+
+        <div
+          class="mt-4 flex flex-col gap-1 col-span-2 border p-4 rounded shadow"
+        >
+          <label for="product_title">Product Variations</label>
+          <table class="" id="variation_table">
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  class="p-2 border outline-none rounded"
+                  name="weight"
+                  style="width: 100%"
+                  placeholder="weight"
+                />
+                <span class="text-red-500 hidden">Fill weight</span>
+              </td>
+              <td>
+                <input
+                  type="number"
+                  name="price"
+                  class="p-2 border outline-none rounded"
+                  style="width: 100%"
+                  placeholder="price"
+                />
+                <span class="text-red-500 hidden">Fill price</span>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="bg-secondry p-2 px-6 rounded success-hover"
+                  onclick="add_varient(this)"
+                  style="width: 100%"
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div
+          class="mt-4 flex flex-col gap-1 col-span-2 border p-4 rounded shadow"
+        >
+          <label for="product_title">Product Benifits</label>
+          <table class="" id="benifit_table">
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  class="p-2 border outline-none rounded"
+                  style="width: 100%"
+                  placeholder="benifit"
+                />
+                <span class="text-red-500 hidden">fill the column</span>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="bg-secondry p-2 px-6 rounded success-hover"
+                  onclick="add_benifit(this,'#benifit_table','benifit')"
+                  style="width: 100%"
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div
+          class="mt-4 flex flex-col gap-1 col-span-2 border p-4 rounded shadow"
+        >
+          <label for="product_title">How to use</label>
+          <table class="" id="how_to_use">
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  class="p-2 border outline-none rounded"
+                  style="width: 100%"
+                  placeholder="How to use"
+                />
+                <span class="text-red-500 hidden">fill the column</span>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="bg-secondry p-2 px-6 rounded success-hover"
+                  onclick="add_benifit(this,'#how_to_use','How to use')"
+                  style="width: 100%"
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div
+          class="mt-4 flex flex-col gap-1 col-span-2 border p-4 rounded shadow"
+        >
+          <label for="product_title">Ingredients</label>
+          <table class="" id="ingredients">
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  class="p-2 border outline-none rounded"
+                  style="width: 100%"
+                  placeholder="Ingredients"
+                />
+                <span class="text-red-500 hidden">fill the column</span>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="bg-secondry p-2 px-6 rounded success-hover"
+                  onclick="add_benifit(this,'#ingredients','Ingredients')"
+                  style="width: 100%"
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div
+          class="mt-4 flex flex-col gap-1 col-span-2 border p-4 rounded shadow"
+        >
+          <label for="product_title">Skin type</label>
+          <table class="" id="skin_type">
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  class="p-2 border outline-none rounded"
+                  style="width: 100%"
+                  placeholder="Skin type"
+                />
+                <span class="text-red-500 hidden">fill the column</span>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="bg-secondry p-2 px-6 rounded success-hover"
+                  onclick="add_benifit(this,'#skin_type','Skin type')"
+                  style="width: 100%"
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="flex gap-2 mt-5">
+          <label for="bset_seller" class="cursor-pointer">Best Seller</label>
+          <input
+            type="checkbox"
+            id="bset_seller"
+            class="cursor-pointer outline-none"
+          />
+        </div>
+        <button type="submit" class="bg-secondry text-white p-3">submit</button>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock %}

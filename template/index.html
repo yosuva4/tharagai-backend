@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tharagai</title>
+
+    <!-- Added Css Style -->
+    <link rel="stylesheet" href="{%static 'css/index.css' %}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+
+    <!-- Font awesome -->
+    <link
+      href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="{% static 'fontawesomefree/css/brands.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="{% static 'fontawesomefree/css/solid.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.18/tailwind.min.css"
+      integrity="sha512-JfKMGsgDXi8aKUrNctVLIZO1k1iMC80jsnMBLHIJk8104g/8WTaoYFNXWxFGV859NY6CMshjktRFklrcWJmt3g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+
+  <body class="bg-success">
+    {% include 'navigation.html' %} {% block content %} {% endblock %}
+  </body>
+
+  <script src="{% static 'js/index.js' %}"></script>
+  <script src="{% static 'js/jquery.js' %}"></script>
+</html>
