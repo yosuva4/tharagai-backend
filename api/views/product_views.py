@@ -16,7 +16,11 @@ from api.forms import ProductForm
 
 class Products(APIView):
     def get(self,request):
-        return Response(status=200, data={"message" : "product showd"}) 
+
+        product = Product.objects.all().order_by('id')
+        serializer = ProductSerializers(product, many=True)
+        return Response(status=200, data=serializer.data)   
+
     def post(self,request):
         data =  request.data
         try:        
@@ -73,25 +77,13 @@ class Products(APIView):
             print("The Error is : ",e)
             
             return Response(status=400,data={"error":"did not saved"})
+    
     def put(self,request):
         return Response(status=200, data={"message" : "product updated"}) 
+    
     def delete(self,request):
         return Response(status=200, data={"message" : "product updated"}) 
     
-def add_product(request):
-    if request.method == 'POST':
-        product_name = request.POST.get('product_name')
-        product_title = request.POST.get('product_title')
-        product_type = request.POST.get('product_type')
-        product_description = request.POST.get('product_description')
-        product_image = request.FILES.get('product_image')  # Get the image file from request.FILES
-
-        # Print the retrieved data to verify
-        print("The Data is: ", request.POST)
-        print("Product Image: ", product_image)
-    return render(request,'product/add-product.html')
-
-
 class BestSeller(APIView):
     def get(self,request):
         product = Product.objects.filter(bestSeller=True).order_by('id')

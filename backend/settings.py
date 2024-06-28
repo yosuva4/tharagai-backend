@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     
     'corsheaders',
     
-    'fontawesomefree'
+    'fontawesomefree',
+
+    'rest_framework_swagger',
     
 ]
 
@@ -115,7 +117,7 @@ DATABASES = {
         'NAME': 'tharagai',  # Change this to your actual database name
         'USER': 'postgres',
         'PASSWORD': 'yosuva',
-        'HOST': 'localhost',  # Change this if your PostgreSQL server is hosted elsewhere
+        'HOST': '127.0.0.1',  # Change this if your PostgreSQL server is hosted elsewhere
         'PORT': '5432',
     }
 }
